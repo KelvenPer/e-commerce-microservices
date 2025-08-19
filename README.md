@@ -127,18 +127,14 @@ Corpo da Requisição (JSON):
   "quantidade": 2
 }
 
-Nota: O produtoId deve ser o ID do produto que você cadastrou no passo anterior.
+ **Nota: O produtoId deve ser o ID do produto que você cadastrou no passo anterior.
 
-Fluxo de Eventos:
+*Fluxo de Eventos:
 
-O VendasService receberá a requisição.
-
-Ele fará uma chamada síncrona (via HTTP) ao EstoqueService para verificar a quantidade disponível.
-
-Se o estoque for suficiente, o pedido será salvo no banco de dados do VendasService.
-
-Uma mensagem será publicada no RabbitMQ para notificar o EstoqueService.
-
-O EstoqueService, agindo como um consumidor, receberá a mensagem e atualizará a quantidade do produto no seu próprio banco de dados.
+  1 - O VendasService receberá a requisição.
+  2 - Ele fará uma chamada síncrona (via HTTP) ao EstoqueService para verificar a quantidade disponível.
+  3 - Se o estoque for suficiente, o pedido será salvo no banco de dados do VendasService.
+  4 - Uma mensagem será publicada no RabbitMQ para notificar o EstoqueService.
+  5 - O EstoqueService, agindo como um consumidor, receberá a mensagem e atualizará a quantidade do produto no seu próprio banco de dados.
 
 Você pode verificar a redução da quantidade do produto consultando-o novamente em http://localhost:5000/estoque/produtos/{id}.
